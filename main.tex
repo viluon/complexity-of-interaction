@@ -1,0 +1,66 @@
+%! TeX program = lualatex
+
+\documentclass{fit-teorsem}
+
+%-------------------------------------------------------------------------------
+%                 Fill in seminar information
+%-------------------------------------------------------------------------------
+\lecturername{Ondřej Kvapil}
+\lectureremail{kvapiond@fit.cvut.cz}
+\papertitle{The Complexity of Interaction}
+\paperauthors{Stéphane Gimenez, Georg Moser}
+\paperlink{https://dl.acm.org/doi/10.1145/2914770.2837646}
+
+%-------------------------------------------------------------------------------
+%                 Use custom packages
+%-------------------------------------------------------------------------------
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{arrows,cd,positioning,shapes,fit}
+
+\tikzset{
+	encircle/.style = {draw, circle, inner sep = 0.5mm, color = red},
+	dot/.style = {circle, minimum size = 1mm, inner sep = 0mm, draw = black},
+	reflexive dot/.style={loop,looseness=17,in=130,out=50},
+	reflexive above/.style={->,loop,looseness=7,in=120,out=60},
+	reflexive below/.style={->,loop,looseness=7,in=240,out=300},
+	reflexive left/.style={->,loop,looseness=7,in=150,out=210},
+	reflexive right/.style={->,loop,looseness=7,in=30,out=330}
+}
+
+\begin{document}
+%-------------------------------------------------------------------------------
+%                 Print seminar header
+%-------------------------------------------------------------------------------
+\maketsheader
+%-------------------------------------------------------------------------------
+%                 Create your content!
+%-------------------------------------------------------------------------------
+\thispagestyle{empty}
+
+\section*{Notes}
+\begin{itemize}
+	\item It may be confusing to see that data constructors pass results on
+		principal ports, but functions don't use principal ports for outputs
+	\item how are interaction nets better than parallel $\beta$-reduction of
+		the lambda calculus?
+	\item there's a lot of linear logic stuff, how far into the references
+		do we want to go?
+	\item we should definitely go over the basics of rewriting systems
+		(notably explain confluence, aka the diamond property) and
+		probably over a brief reminder of what the LC actually is
+		\begin{itemize}
+			\item we can use \verb|\faDiamond| from the FontAwesome package
+				for the diamond property
+		\end{itemize}
+	\item is the timed sequential reduction \textit{required} to exhibit
+		the diamond property, or is that clear from its definition?
+\end{itemize}
+
+\section*{Definitions}
+
+\section*{Theorems}
+
+\end{document}
