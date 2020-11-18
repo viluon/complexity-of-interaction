@@ -57,6 +57,97 @@
 		\end{itemize}
 	\item is the timed sequential reduction \textit{required} to exhibit
 		the diamond property, or is that clear from its definition?
+	\item regarding $\sqsubset$: so we're working towards \textit{sequential}
+		space-time complexity, and now we've defined a tool that
+		\textit{sequences functions} with some time delays in-between
+	\item what's a convolution?
+	\item \textbf{Theorem 1} (Sequential Space-Time Complexity) Associate a function $\gamma_c : T \to S$,
+		called \textit{space-time potential}, to every typed node $c$, such that
+		$\underbrace{\gamma_c(0) \ge |c|}_{\begin{subarray}{c}
+			\text{The space complexity} \\
+			\text{of node $c$ at time $0$ is at least} \\
+			\text{the space weight of node $c$}
+		\end{subarray}}$ and \[
+			\underbrace{\overbrace{\left(\coprod_{c \in L} \gamma_c\right)}^{\begin{subarray}{c}
+					\text{The convolution} \\
+					\text{on the LHS}
+				\end{subarray}}\overbrace{(t + d)}^{\begin{subarray}{c}
+					\text{at a time $t$ offset} \\
+					\text{by the duration $d$} \\
+					\text{of the reduction rule}
+				\end{subarray}}}_{
+			\begin{subarray}{c}
+				\text{The maximum space complexity} \\
+				\text{of the LHS at time $t + d$}
+			\end{subarray}}
+				\ge \underbrace{\overbrace{\left(\coprod_{c \in R} \gamma_c\right)}^{\begin{subarray}{c}
+						\text{The convolution} \\
+						\text{on the EHS}
+					\end{subarray}}(t)}_{
+				\begin{subarray}{c}
+					\text{The maximum space complexity} \\
+					\text{of the EHS at time $t$}
+				\end{subarray}}
+		\] for every reduction rule $L \stackrel{d}{\longrightarrow} R$. Then \[
+			N \stackrel{t}{\longrightarrow}_s M
+				\Longrightarrow |M| \le \left(\coprod_{c \in N} \gamma_c\right)(t)
+		.\]
+		In other words, the precondition states that when given the choice to either apply a timed
+		reduction rule of duration $d$ at time $t$ or to wait until time $t + d$, the application
+		of the rule must not result in an increase in space complexity when compared to the option
+		to wait. This condition must hold for all reduction rules, we must choose a space-time
+		potential which satisfies it. Additionally, the space-time potential must also be consistent
+		with the space weights. \textit{Given these assumptions}, we observe that the timed sequential
+		reduction $N \stackrel{t}{\longrightarrow}_s M$ implies a lack of an increase in the space
+		occupation ($|M|$) compared to the space-time potential of the unreduced net at time $t$?
+
+		\begin{itemize}
+			\item but why would the value of the space-time potential change over time for a net that's not
+				undergoing any reductions?
+			\item this shines a little bit of light on the choices we can make when creating $\gamma_c$'s.
+				There's the option to ``allocate'' more complexity than a node actually needs,
+				which could potentially be used for amortised complexity analysis. However, once
+				we apply the sequential reduction of duration $t$, we must not end up with a ``larger''
+				net than what we had allocated for ($|M|$ could be greater than $|N|$, but this negative
+				difference must not exceed the ``plan'' expressed via the space-time potential for $N$).
+		\end{itemize}
+
+		Recall the cost model defined earlier:
+		\begin{description}
+			\item[Cost Model] Given a timed reduction $\longrightarrow$ and a notion of space
+				occupation $|\cdot|$ for nets (typically, the number of nodes) in a chosen
+				space domain $S$, we say that $N$ admits:
+				\begin{itemize}
+					\item $\tau \in T$ as a time bound if whenever
+						$N \stackrel{t}{\longrightarrow} M$, $t \le \tau$
+					\item $\sigma \in S$ as a space bound if whenever
+						$N \stackrel{t}{\longrightarrow} M$, $|M| \le \sigma$
+					\item $\gamma : T \to S$ as a space-time bound if whenever
+						$N \stackrel{t}{\longrightarrow} M$, $|M| \le \gamma(t).$
+				\end{itemize}
+		\end{description}
+		\begin{itemize}
+			\item does this mean that the space-time potential (or rather its convolution for the entire net)
+				is (weakly) monotonic?
+			\item hmm, the system's reduction rules are actually steps of computation. We would like
+				the steps to make progress towards a result. But doesn't the monotonicity take
+				Turing-completeness away? If we \textit{can} perform complexity analysis on a net
+				and get a finite result, that's proof that its evaluation must halt!
+		\end{itemize}
+		\begin{description}
+			\item[Proof of Theorem 1] The potential-decrease property assumed for reduction rules
+				entails the same property for individual sequential reduction steps of a net:
+				\begin{enumerate}
+					\item $\gamma_L (t + d) \ge \gamma_R (t)$
+					\item \begin{align*}
+							& (\gamma \ast \gamma_L) (t + d) = \\
+							& \max_{u + v = t + d} (\gamma(u) + \gamma_L(v)) \ge \\
+							& \max_{u + v = t} (\gamma(u) + \gamma_L(v + d)) \ge \\
+							& \max_{u + v = t} (\gamma(u) + \gamma_R(v)) = \\
+							& (\gamma \ast \gamma_R)(t)
+						.\end{align*}
+				\end{enumerate}
+		\end{description}
 \end{itemize}
 
 \section*{Definitions}
