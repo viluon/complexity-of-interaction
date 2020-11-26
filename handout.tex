@@ -1,0 +1,113 @@
+%! TeX program = lualatex
+
+\documentclass{fit-teorsem}
+
+%-------------------------------------------------------------------------------
+%                 Fill in seminar information
+%-------------------------------------------------------------------------------
+\lecturername{Ondřej Kvapil}
+\lectureremail{kvapiond@fit.cvut.cz}
+\papertitle{The Complexity of Interaction}
+\paperauthors{Stéphane Gimenez, Georg Moser}
+\paperlink{https://arxiv.org/abs/1511.01838}
+
+%-------------------------------------------------------------------------------
+%                 Use custom packages
+%-------------------------------------------------------------------------------
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{arrows,cd,positioning,shapes,fit}
+
+\tikzset{
+	encircle/.style = {draw, circle, inner sep = 0.5mm, color = red},
+	dot/.style = {circle, minimum size = 1mm, inner sep = 0mm, draw = black},
+	reflexive dot/.style={loop,looseness=17,in=130,out=50},
+	reflexive above/.style={->,loop,looseness=7,in=120,out=60},
+	reflexive below/.style={->,loop,looseness=7,in=240,out=300},
+	reflexive left/.style={->,loop,looseness=7,in=150,out=210},
+	reflexive right/.style={->,loop,looseness=7,in=30,out=330}
+}
+
+\begin{document}
+%-------------------------------------------------------------------------------
+%                 Print seminar header
+%-------------------------------------------------------------------------------
+\maketsheader
+%-------------------------------------------------------------------------------
+%                 Create your content!
+%-------------------------------------------------------------------------------
+\thispagestyle{empty}
+
+\section*{Definitions}
+\begin{enumerate}
+\item The \textbf{sequential convolution} of functions $f$ and $g$ is defined as
+	$(f \ast g)(t) = \max_{u + v = t} f(u) + g(v)$.
+
+\item The \textbf{generalised sequential convolution} of a family of functions $\{f_i\}_{i \in I}$ is
+	defined as \[
+		\left(\coprod_{i \in I} f_i\right)(t) = \max_{\sum_{i \in I} t_i = t} \sum_{i \in I} f_i(t_i)
+	.\]
+
+\item \textbf{Cost Model} Given a timed reduction $\longrightarrow$ and a notion of space
+	occupation $|\cdot|$ for nets (typically, the number of nodes) in a chosen
+	space domain $S$, we say that $N$ admits:
+	\begin{itemize}
+		\item $\tau \in T$ as a time bound if whenever
+			$N \stackrel{t}{\longrightarrow} M$, $t \le \tau$
+		\item $\sigma \in S$ as a space bound if whenever
+			$N \stackrel{t}{\longrightarrow} M$, $|M| \le \sigma$
+		\item $\gamma : T \to S$ as a space-time bound if whenever
+			$N \stackrel{t}{\longrightarrow} M$, $|M| \le \gamma(t).$
+	\end{itemize}
+\end{enumerate}
+
+\section*{Theorems}
+\textbf{Theorem 1} (Sequential Space-Time Complexity) Associate a function $\gamma_c : T \to S$,
+called \textit{space-time potential}, to every typed node $c$, such that
+$\underbrace{\gamma_c(0) \ge |c|}_{\begin{subarray}{c}
+	\text{The space complexity} \\
+	\text{of node $c$ at time $0$ is at least} \\
+	\text{the space weight of node $c$}
+\end{subarray}}$ and \[
+	\underbrace{\overbrace{\left(\coprod_{c \in L} \gamma_c\right)}^{\begin{subarray}{c}
+			\text{The convolution} \\
+			\text{on the LHS}
+		\end{subarray}}\overbrace{(t + d)}^{\begin{subarray}{c}
+			\text{at a time $t$ offset} \\
+			\text{by the duration $d$} \\
+			\text{of the reduction rule}
+		\end{subarray}}}_{
+	\begin{subarray}{c}
+		\text{The maximum space complexity} \\
+		\text{of the LHS at time $t + d$}
+	\end{subarray}}
+		\ge \underbrace{\overbrace{\left(\coprod_{c \in R} \gamma_c\right)}^{\begin{subarray}{c}
+				\text{The convolution} \\
+				\text{on the RHS}
+			\end{subarray}}(t)}_{
+		\begin{subarray}{c}
+			\text{The maximum space complexity} \\
+			\text{of the RHS at time $t$}
+		\end{subarray}}
+\] for every reduction rule $L \stackrel{d}{\longrightarrow} R$. Then \[
+	N \stackrel{t}{\longrightarrow}_s M
+		\Longrightarrow |M| \le \left(\coprod_{c \in N} \gamma_c\right)(t)
+.\]
+
+\begin{description}
+	\item[Proof of Theorem 1] The potential-decrease property assumed for reduction rules
+		entails the same property for individual sequential reduction steps of a net:
+		\begin{enumerate}
+			\item $\gamma_L (t + d) \ge \gamma_R (t)$
+			\item \begin{align*}
+					& (\gamma \ast \gamma_L) (t + d) = \\
+					& \max_{u + v = t + d} (\gamma(u) + \gamma_L(v)) \ge \\
+					& \max_{u + v = t} (\gamma(u) + \gamma_L(v + d)) \ge \\
+					& \max_{u + v = t} (\gamma(u) + \gamma_R(v)) = \\
+					& (\gamma \ast \gamma_R)(t)
+				.\end{align*}
+		\end{enumerate}
+\end{description}
+\end{document}
