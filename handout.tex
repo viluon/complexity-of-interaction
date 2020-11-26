@@ -44,15 +44,18 @@
 \thispagestyle{empty}
 
 \section*{Images}
-\begin{minipage}{.5\textwidth}
+\begin{minipage}{.45\textwidth}
 	\includegraphics[width=0.95\textwidth]{inet-nodes}
 	\captionof{figure}{The nodes of the interaction net system.}
 	\label{fig:inet-nodes}
 \end{minipage} %
-\begin{minipage}{.5\textwidth}
+\begin{minipage}{.55\textwidth}
 	\includegraphics[width=0.95\textwidth]{inet-addition}
 	\captionof{figure}{Addition of natural numbers in an interaction net.}
 	\label{fig:inet-addition}
+	\includegraphics[width=1.1\textwidth]{inet-sized-addition}
+	\captionof{figure}{Sized addition of natural numbers.}
+	\label{fig:inet-sized-addition}
 \end{minipage}
 
 \section*{Definitions}
@@ -66,15 +69,7 @@
 	\textit{Timed parallel reduction} $\longrightarrow_p$ requires labelling each redex $r$ with
 	a counter $c(r)$, $c(r) < d(r)$, where $d(r)$ is associated to the corresponding reduction rule.
 
-\item The \textbf{sequential convolution} of functions $f$ and $g$ is defined as
-	$(f \ast g)(t) = \max_{u + v = t} f(u) + g(v)$.
-
-\item The \textbf{generalised sequential convolution} of a family of functions $\{f_i\}_{i \in I}$ is
-	defined as \[
-		\left(\coprod_{i \in I} f_i\right)(t) = \max_{\sum_{i \in I} t_i = t} \sum_{i \in I} f_i(t_i)
-	.\]
-
-\item \textbf{Cost Model} Given a timed reduction $\longrightarrow$ and a notion of space
+\item \textbf{Cost Model.} Given a timed reduction $\longrightarrow$ and a notion of space
 	occupation $|\cdot|$ for nets (typically, the number of nodes) in a chosen
 	space domain $S$, we say that $N$ admits:
 	\begin{itemize}
@@ -85,14 +80,22 @@
 		\item $\gamma : T \to S$ as a space-time bound if whenever
 			$N \stackrel{t}{\longrightarrow} M$, $|M| \le \gamma(t).$
 	\end{itemize}
+
+\item The \textbf{sequential convolution} of functions $f$ and $g$ is defined as
+	$(f \ast g)(t) = \max_{u + v = t} f(u) + g(v)$.
+
+\item The \textbf{generalised sequential convolution} of a family of functions $\{f_i\}_{i \in I}$ is
+	defined as \[
+		\left(\coprod_{i \in I} f_i\right)(t) = \max_{\sum_{i \in I} t_i = t} \sum_{i \in I} f_i(t_i)
+	.\]
 \end{enumerate}
 
 \section*{Theorems}
 \textbf{Theorem 1} (Sequential Space-Time Complexity) Associate a function $\gamma_c : T \to S$,
 called \textit{space-time potential}, to every typed node $c$, such that
 $\underbrace{\gamma_c(0) \ge |c|}_{\begin{subarray}{c}
-	\text{The space complexity} \\
-	\text{of node $c$ at time $0$ is at least} \\
+	\text{The space complexity of node $c$ after} \\
+	\text{$0$ ``seconds'' of reduction is at least} \\
 	\text{the space weight of node $c$}
 \end{subarray}}$ and \[
 	\underbrace{\overbrace{\left(\coprod_{c \in L} \gamma_c\right)}^{\begin{subarray}{c}
