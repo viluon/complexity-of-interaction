@@ -88,6 +88,18 @@
 	defined as \[
 		\left(\coprod_{i \in I} f_i\right)(t) = \max_{\sum_{i \in I} t_i = t} \sum_{i \in I} f_i(t_i)
 	.\]
+
+\item A natural number admits the \textbf{sized type} $\mathsf{nat}_n$ if its value is bounded by
+	$n : \mathbb{N}$. The typing scheme for $zero$ assigns $\mathsf{nat}_n$ to its principal port,
+	the typing scheme for $succ$ assigns $\mathsf{nat}_n$ to its auxiliary port and
+	$\mathsf{nat}_{n + 1}$ to its principal port.
+
+\item A natural number admits the \textbf{scheduled type} $\mathsf{nat}^d$ if its first constructor is
+	available now and one additional constructor will be made available after every parallel
+	reduction of duration $d \ge 0$ (or faster).
+
+\item An object of the \textbf{delayed type} $[A]^t$ will become an $A$ after parallel reduction of duration
+	$t \ge 0$ (defaulting to 1 if omitted). $[A]^0 = A$, $[[A]^{t_1}]^{t_2} = [A]^{t_1 + t_2}$.
 \end{enumerate}
 
 \section*{Theorems}
