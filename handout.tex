@@ -19,6 +19,9 @@
 \usepackage{amsfonts}
 \usepackage{tikz}
 \usetikzlibrary{arrows,cd,positioning,shapes,fit}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{caption}
 
 \tikzset{
 	encircle/.style = {draw, circle, inner sep = 0.5mm, color = red},
@@ -39,6 +42,18 @@
 %                 Create your content!
 %-------------------------------------------------------------------------------
 \thispagestyle{empty}
+
+\section*{Images}
+\begin{minipage}{.5\textwidth}
+	\includegraphics[width=0.95\textwidth]{inet-nodes}
+	\captionof{figure}{The nodes of the interaction net system.}
+	\label{fig:inet-nodes}
+\end{minipage} %
+\begin{minipage}{.5\textwidth}
+	\includegraphics[width=0.95\textwidth]{inet-addition}
+	\captionof{figure}{Addition of natural numbers in an interaction net.}
+	\label{fig:inet-addition}
+\end{minipage}
 
 \section*{Definitions}
 \begin{enumerate}
@@ -96,18 +111,35 @@ $\underbrace{\gamma_c(0) \ge |c|}_{\begin{subarray}{c}
 		\Longrightarrow |M| \le \left(\coprod_{c \in N} \gamma_c\right)(t)
 .\]
 
-\begin{description}
-	\item[Proof of Theorem 1] The potential-decrease property assumed for reduction rules
-		entails the same property for individual sequential reduction steps of a net:
-		\begin{enumerate}
-			\item $\gamma_L (t + d) \ge \gamma_R (t)$
-			\item \begin{align*}
-					& (\gamma \ast \gamma_L) (t + d) = \\
-					& \max_{u + v = t + d} (\gamma(u) + \gamma_L(v)) \ge \\
-					& \max_{u + v = t} (\gamma(u) + \gamma_L(v + d)) \ge \\
-					& \max_{u + v = t} (\gamma(u) + \gamma_R(v)) = \\
-					& (\gamma \ast \gamma_R)(t)
-				.\end{align*}
-		\end{enumerate}
-\end{description}
+\textbf{Corollary 2} (Sequential Time Complexity) Associate $\tau_c \ge 0$, called \textit{time potential},
+to every typed node $c$, such that $\sum_{c \in L} \tau_c \ge \sum_{c \in R} \tau_c + d$ for
+every reduction rule $L \stackrel{d}{\longrightarrow} R$. Whenever
+$N \stackrel{t}{\longrightarrow}_s M$: \[
+	t \le \sum_{c \in N} \tau_c
+.\]
+
+\textbf{Corollary 3} (Sequential Space Complexity) Associate $\sigma_c \ge 0$, called
+\textit{space potential}, to every typed node~$c$, such that
+$\sum_{c \in L} \sigma_c \ge \sum_{c \in R} \sigma_c$
+for every reduction rule $L \stackrel{d}{\longrightarrow} R$. Whenever
+$N \stackrel{t}{\longrightarrow}_s M$: \[
+	|M| \le \sum_{c \in N} \sigma_c
+.\] 
+
+\textbf{Theorem 2} (Parallel Space-Time Complexity) Associate a function $\overline{\gamma}_c : T \to S$,
+called \textit{parallel space-time potential}, to every schedule-typed node $c$, such that
+$\overline{\gamma}_c(0) \ge |c|,$ $\overline{\gamma}_{[c]^d}(t + d) \ge \overline{\gamma}_c(t),$
+and $(\sum_{c \in L} \overline{\gamma}_c)(t + d) \ge (\sum_{c \in R} \overline{\gamma}_c)(t)$ for
+every reduction rule $L \stackrel{d}{\longrightarrow} R$. Whenever
+$N \stackrel{t}{\longrightarrow}_p M$: \[
+	|M| \le \left( \sum_{c \in N} \overline{\gamma}_c \right)(t)
+.\]
+
+\textbf{Corollary 4} (Parallel Time Complexity) Associate $\overline{\tau}_c \ge 0$, called
+\textit{parallel time potential}, to every schedule-typed node $c$, such that
+$\overline{\tau}_{[c]^d} \ge \overline{\tau}_c + d$ and
+$\max_{c \in L} \overline{\tau}_c \ge \max_{c \in R} \overline{\tau}_c + d$ for every reduction rule
+$L \stackrel{d}{\longrightarrow} R$. Whenever $N \stackrel{t}{\longrightarrow}_p M$: \[
+t \le \max_{c \in N} \overline{\tau}_c
+.\]
 \end{document}
