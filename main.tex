@@ -220,6 +220,13 @@
 		we give the multiplication node such weird bounds, right? Because they don't express
 		the space occupancy of \textit{that one single node}, but of the algorithm it represents,
 		in a way
+	\item ok so the insight with the parallel reduction is that this is a theoretical model, in which
+		the application of a rule to a redex \textit{is actually instantaneous}, regardless of any
+		delays given for the rule! This doesn't correspond well to the implementation detail
+		which actually requires some time to process the reduction (but a reduction is an atomic
+		operation). Therefore, the atomicity of reductions is worked around using these $c(r)$ counters,
+		which ``pause'' the redex for the required amount of time, and then magically replace it with
+		the RHS of the corresponding rule.
 \end{itemize}
 
 \section*{Definitions}

@@ -57,6 +57,15 @@
 
 \section*{Definitions}
 \begin{enumerate}
+\item \textbf{Timed Interaction.} We generalise interaction net systems to timed reduction rules
+	$L \stackrel{d}{\longrightarrow} R$, in which the label $d \ge 0$ denotes a time duration
+	in time domain $T$, which can either be discrete or continuous.
+
+	\textit{Timed sequential reduction} $\longrightarrow_s$ satisfies a timed $\diamond$ property.
+
+	\textit{Timed parallel reduction} $\longrightarrow_p$ requires labelling each redex $r$ with
+	a counter $c(r)$, $c(r) < d(r)$, where $d(r)$ is associated to the corresponding reduction rule.
+
 \item The \textbf{sequential convolution} of functions $f$ and $g$ is defined as
 	$(f \ast g)(t) = \max_{u + v = t} f(u) + g(v)$.
 
